@@ -7,7 +7,7 @@ const { response } = require('express');
 
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 //middleware
 app.use(cors());
@@ -52,7 +52,7 @@ async function run() {
             console.log('Hit the post api', service);
             const result = await servicesCollection.insertOne(service);
             console.log(result);
-            response.json(result)
+            res.json(result)
         });
 
         //DELETE API
@@ -60,7 +60,8 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await servicesCollection.deleteOne(query);
-            response.json(result);
+            console.log(result);
+            res.json(result);
         })
     }
     finally {
